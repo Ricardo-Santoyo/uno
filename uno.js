@@ -5,4 +5,28 @@ let deck = {
     blue0: 1, blue1: 2, blue2: 2, blue3: 2, blue4: 2, blue5: 2, blue6: 2, blue7: 2, blue8: 2, blue9: 2,
     redReverse: 2, yellowReverse: 2, greenReverse: 2, blueReverse: 2, redPlus2: 2, yellowPlus2: 2, greenPlus2: 2, bluePlus2: 2,
     redSkip: 2, yellowSkip: 2, greenSkip: 2, blueSkip: 2, wild: 4, wildPlus4: 4
-}
+};
+
+let playerDeck = {}
+
+function passCards() {
+    for (i = 0; i < 7; i++) {
+        let card = pickRandomCard(deck);
+        if (playerDeck[card] == undefined) {
+            playerDeck[card] = 1;
+        }
+        else {
+            playerDeck[card] += 1;
+        };
+    };
+};
+
+function pickRandomCard(obj) {
+    let keys = Object.keys(obj);
+    let card = keys[keys.length * Math.random() << 0];
+    while (obj[card] == 0) {
+        card = keys[keys.length * Math.random() << 0]
+    };
+    obj[card] -= 1;
+    return card;
+};
