@@ -7,7 +7,18 @@ let deck = {
     redSkip: 2, yellowSkip: 2, greenSkip: 2, blueSkip: 2, wild: 4, wildPlus4: 4
 };
 
-let playerDeck = {}
+let playerDeck = {};
+
+let hiddenCards = document.querySelector("#hiddenCards");
+
+let displayCards = document.querySelector("#displayCards");
+
+let allCards = Object.keys(deck);
+allCards.forEach((card) => {
+    let newDiv = document.createElement("div");
+    newDiv.id = "" + card;
+    hiddenCards.appendChild(newDiv);
+});
 
 function passCards() {
     for (i = 0; i < 7; i++) {
@@ -19,6 +30,7 @@ function passCards() {
             playerDeck[card] += 1;
         };
     };
+    displayCard();
 };
 
 function pickRandomCard(obj) {
@@ -29,4 +41,17 @@ function pickRandomCard(obj) {
     };
     obj[card] -= 1;
     return card;
+};
+
+function displayCard() {
+    let cards = Object.keys(playerDeck);
+    cards.forEach((card) => {
+        let numberOfCards = playerDeck[card];
+        while (numberOfCards > 0) {
+            let newCard = document.getElementById(card);
+            let cloneCard = newCard.cloneNode(true);
+            displayCards.appendChild(cloneCard);
+            numberOfCards -= 1;
+        };
+    }); 
 };

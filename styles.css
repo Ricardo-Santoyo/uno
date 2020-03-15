@@ -1,3 +1,192 @@
-body {
+body, html {
     background-color: black;
+    height: 100%;
+    margin: auto;
+}
+
+#displayCards {
+    display: flex;
+    height: 80%;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0px 10px;
+}
+
+div[id^="r"], div[id^='y'], div[id^="g"], div[id^="b"], div[id^="w"] {
+    width: 85px;
+    height: 133px;
+    margin: 0px 10px;
+}
+
+#red1 {
+    background: url('unoDeck.png') 0 0;
+}
+#red2 {
+    background: url('unoDeck.png') -85.5px 0;
+}
+#red3 {
+    background: url('unoDeck.png') -171px 0;
+}
+#red4 {
+    background: url('unoDeck.png') -256.5px 0;
+}
+#red5 {
+    background: url('unoDeck.png') -342px 0;
+}
+#red6 {
+    background: url('unoDeck.png') -427.5px 0;
+}
+#red7 {
+    background: url('unoDeck.png') -513px 0;
+}
+#red8 {
+    background: url('unoDeck.png') -598.5px 0;
+}
+#red9 {
+    background: url('unoDeck.png') -684px 0;
+}
+#red0 {
+    background: url('unoDeck.png') -769.5px 0;
+}
+
+
+#yellow1 {
+    background: url('unoDeck.png') 0 -134px;
+}
+#yellow2 {
+    background: url('unoDeck.png') -85.5px -134px;
+}
+#yellow3 {
+    background: url('unoDeck.png') -171px -134px;
+}
+#yellow4 {
+    background: url('unoDeck.png') -256.5px -134px;
+}
+#yellow5 {
+    background: url('unoDeck.png') -342px -134px;
+}
+#yellow6 {
+    background: url('unoDeck.png') -427.5px -134px;
+}
+#yellow7 {
+    background: url('unoDeck.png') -513px -134px;
+}
+#yellow8 {
+    background: url('unoDeck.png') -598.5px -134px;
+}
+#yellow9 {
+    background: url('unoDeck.png') -684px -134px;
+}
+#yellow0 {
+    background: url('unoDeck.png') -769.5px -134px;
+}
+
+
+#green1 {
+    background: url('unoDeck.png') 0 -267px;
+}
+#green2 {
+    background: url('unoDeck.png') -85.5px -267px;
+}
+#green3 {
+    background: url('unoDeck.png') -171px -267px;
+}
+#green4 {
+    background: url('unoDeck.png') -256.5px -267px;
+}
+#green5 {
+    background: url('unoDeck.png') -342px -267px;
+}
+#green6 {
+    background: url('unoDeck.png') -427.5px -267px;
+}
+#green7 {
+    background: url('unoDeck.png') -513px -267px;
+}
+#green8 {
+    background: url('unoDeck.png') -598.5px -267px;
+}
+#green9 {
+    background: url('unoDeck.png') -684px -267px;
+}
+#green0 {
+    background: url('unoDeck.png') -769.5px -267px;
+}
+
+
+#blue1 {
+    background: url('unoDeck.png') 0 -401px;
+}
+#blue2 {
+    background: url('unoDeck.png') -85.5px -401px;
+}
+#blue3 {
+    background: url('unoDeck.png') -171px -401px;
+}
+#blue4 {
+    background: url('unoDeck.png') -256.5px -401px;
+}
+#blue5 {
+    background: url('unoDeck.png') -342px -401px;
+}
+#blue6 {
+    background: url('unoDeck.png') -427.5px -401px;
+}
+#blue7 {
+    background: url('unoDeck.png') -513px -401px;
+}
+#blue8 {
+    background: url('unoDeck.png') -598.5px -401px;
+}
+#blue9 {
+    background: url('unoDeck.png') -684px -401px;
+}
+#blue0 {
+    background: url('unoDeck.png') -769.5px -401px;
+}
+
+
+#redSkip {
+    background: url('unoDeck.png') 0 -534px;
+}
+#redReverse {
+    background: url('unoDeck.png') -85.5px -534px;
+}
+#redPlus2 {
+    background: url('unoDeck.png') -171px -534px;
+}
+#yellowSkip {
+    background: url('unoDeck.png') -256.5px -534px;
+}
+#yellowReverse {
+    background: url('unoDeck.png') -342px -534px;
+}
+#yellowPlus2 {
+    background: url('unoDeck.png') -427.5px -534px;
+}
+#greenSkip {
+    background: url('unoDeck.png') -513px -534px;
+}
+#greenReverse {
+    background: url('unoDeck.png') -598.5px -534px;
+}
+#greenPlus2 {
+    background: url('unoDeck.png') -684px -534px;
+}
+#blueSkip {
+    background: url('unoDeck.png') -769.5px -534px;
+}
+
+
+#blueReverse {
+    background: url('unoDeck.png') 0 -668px;
+}
+#bluePlus2 {
+    background: url('unoDeck.png') -85.5px -668px;
+}
+#wild {
+    background: url('unoDeck.png') -171px -668px;
+}
+#wildPlus4 {
+    background: url('unoDeck.png') -342px -668px;
 }
