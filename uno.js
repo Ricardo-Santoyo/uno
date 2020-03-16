@@ -6,12 +6,13 @@ let deck = {
     redReverse: 2, yellowReverse: 2, greenReverse: 2, blueReverse: 2, redPlus2: 2, yellowPlus2: 2, greenPlus2: 2, bluePlus2: 2,
     redSkip: 2, yellowSkip: 2, greenSkip: 2, blueSkip: 2, wild: 4, wildPlus4: 4
 };
-
 let playerDeck = {};
+let discardPile = {};
 
 let hiddenCards = document.querySelector("#hiddenCards");
-
 let displayCards = document.querySelector("#displayCards");
+const playButton = document.querySelector("#play");
+let discardPileCard;
 
 let allCards = Object.keys(deck);
 allCards.forEach((card) => {
@@ -19,6 +20,15 @@ allCards.forEach((card) => {
     newDiv.id = "" + card;
     hiddenCards.appendChild(newDiv);
 });
+
+playButton.addEventListener("click", startGame);
+
+function startGame() {
+    passCards();
+    playButton.remove();
+    createDiscardPile();
+    clickablePlayerCards();
+};
 
 function passCards() {
     for (i = 0; i < 7; i++) {
@@ -54,4 +64,32 @@ function displayCard() {
             numberOfCards -= 1;
         };
     }); 
+};
+
+function addToDiscardPile(e) {
+    let cardName = e.target.id;
+    if (discardPileCard.firstChild) {
+        discardPileCard.removeChild(discardPileCard.firstChild);
+    };
+    discardPileCard.appendChild(e.target);
+    playerDeck[cardName] -= 1;
+    if (discardPile[cardName] == undefined) {
+        discardPile[cardName] = 1;
+    }
+    else {
+        discardPile[cardName] += 1;
+    };
+};
+
+function clickablePlayerCards() {
+    let cards = displayCards.querySelectorAll("div");
+    cards.forEach((card) => {
+        card.addEventListener("click", addToDiscardPile);
+    });
+};
+
+function createDiscardPile() {
+    discardPileCard = document.createElement("div");
+    discardPileCard.id = "discardPileCard";
+    document.body.appendChild(discardPileCard);
 };
