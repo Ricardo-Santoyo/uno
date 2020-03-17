@@ -81,6 +81,27 @@ function displayCard() {
 
 function addToDiscardPile(e) {
     let cardName = e.target.id;
+    let discardCard = discardPileCard.firstChild.id;
+    let discardCardColor = discardCard[0];
+    let discardCardNumber = discardCard[discardCard.length - 1];
+    let discardCardPlus = discardCard[discardCard.length - 5];
+    if (cardName[0] == discardCardColor) {
+    }
+    else if (cardName[cardName.length - 1] == discardCardNumber) {
+        if (cardName[cardName.length - 1] == 2 && discardCardPlus == "P" && cardName[cardName.length - 5] != "P") {
+            return
+        }
+        else if (cardName[cardName.length - 1] == 2 && discardCardPlus != "P" && cardName[cardName.length - 5] == "P") {
+            return
+        };
+    }
+    else if (cardName[cardName.length - 5] == "P" && discardCardPlus == "P") {
+    }
+    else if (cardName[0] == "w" || discardCardColor == "w") {
+    }
+    else {
+        return
+    };
     if (discardPileCard.firstChild) {
         discardPileCard.removeChild(discardPileCard.firstChild);
     };
