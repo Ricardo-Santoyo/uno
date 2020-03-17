@@ -122,6 +122,10 @@ function initialCard() {
 
 deckPile.addEventListener("click", drawAcard);
 function drawAcard() {
+    numberOfCardsInDeck = Object.values(deck).reduce((sum, value) => sum + value);
+    if (numberOfCardsInDeck == 0) {
+        discardPileToDeckPile();
+    };
     let card = pickRandomCard(deck);
     if (playerDeck[card] == undefined) {
         playerDeck[card] = 1;
@@ -131,4 +135,23 @@ function drawAcard() {
     };
     displayCard();
     clickablePlayerCards();
+};
+
+function discardPileToDeckPile() {
+    discardPileEntries = Object.entries(discardPile);
+    discardPileEntries.forEach((array) =>{
+        let key = array[0];
+        let value = array[1];
+        if (key == discardPileCard.firstChild.id) {
+            if (discardPile[key] == 1) {
+                console.log(key);
+            } else {
+                deck[key] += (value - 1);
+                discardPile[key] -= (value - 1);
+            };
+        } else {
+            deck[key] += value;
+            discardPile[key] -= value;
+        };
+    });
 };
