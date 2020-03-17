@@ -27,6 +27,23 @@ body, html {
     cursor: pointer;
 }
 
+#deckPile {
+    position: absolute;
+    width: 85px;
+    height: 133px;
+    left: 25%;
+    top: 50%;
+    margin-left: -42.5px;
+    margin-top: -66.5px;
+    pointer-events: none;
+}
+
+#deckPile:hover {
+    transform: scale(1.04);
+    box-shadow: rgba(255, 255, 255, 0.61) 0px 0px 70px;
+    cursor: pointer;
+}
+
 #discardPileCard {
     position: absolute;
     width: 85px;

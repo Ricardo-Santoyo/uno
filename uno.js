@@ -12,6 +12,7 @@ let discardPile = {};
 let hiddenCards = document.querySelector("#hiddenCards");
 let displayCards = document.querySelector("#displayCards");
 const playButton = document.querySelector("#play");
+let deckPile = document.querySelector("#deckPile");
 let discardPileCard;
 
 let allCards = Object.keys(deck);
@@ -27,7 +28,9 @@ function startGame() {
     passCards();
     playButton.remove();
     createDiscardPile();
+    createDeckPile();
     clickablePlayerCards();
+    initialCard();
 };
 
 function passCards() {
@@ -54,6 +57,16 @@ function pickRandomCard(obj) {
 };
 
 function displayCard() {
+    if (displayCards.lastElementChild.id != "hiddenCards") {
+        let nodeList = [...displayCards.childNodes];
+        let i = 0;
+        nodeList.forEach((child) => {
+            if (i >= 3) {
+                displayCards.removeChild(child);
+            };
+            i += 1
+        });
+    };
     let cards = Object.keys(playerDeck);
     cards.forEach((card) => {
         let numberOfCards = playerDeck[card];
@@ -92,4 +105,30 @@ function createDiscardPile() {
     discardPileCard = document.createElement("div");
     discardPileCard.id = "discardPileCard";
     document.body.appendChild(discardPileCard);
+};
+
+function createDeckPile() {
+    deckPile.style.background = "url('otherCards.png') 0 0";
+    deckPile.style.pointerEvents = "all";
+};
+
+function initialCard() {
+    let card = pickRandomCard(deck);
+    let displayCard = document.getElementById(card);
+    let cloneCard = displayCard.cloneNode(true);
+    discardPileCard.appendChild(cloneCard);
+    discardPile[card] = 1;
+};
+
+deckPile.addEventListener("click", drawAcard);
+function drawAcard() {
+    let card = pickRandomCard(deck);
+    if (playerDeck[card] == undefined) {
+        playerDeck[card] = 1;
+    }
+    else {
+        playerDeck[card] += 1;
+    };
+    displayCard();
+    clickablePlayerCards();
 };
