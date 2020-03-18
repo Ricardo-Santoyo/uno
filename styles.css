@@ -27,6 +27,41 @@ body, html {
     cursor: pointer;
 }
 
+#colorGrid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -150px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 0;
+}
+
+div[id^="cell"] {
+    width: 100px;
+    height: 100px;
+}
+#cellGreen {
+    background-color: #008842;
+}
+#cellBlue {
+    background-color: #0095da
+}
+#cellYellow {
+    background-color: #ffe119;
+}
+#cellRed {
+    background-color: #ed1c1c;
+}
+
+#cellGreen:hover, #cellBlue:hover, #cellYellow:hover, #cellRed:hover {
+    transform: scale(1.15);
+    box-shadow: rgba(255, 255, 255, 0.61) 0px 0px 70px;
+    cursor: pointer;
+}
+
 #deckPile {
     position: absolute;
     width: 85px;

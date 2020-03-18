@@ -13,6 +13,7 @@ let hiddenCards = document.querySelector("#hiddenCards");
 let displayCards = document.querySelector("#displayCards");
 const playButton = document.querySelector("#play");
 let deckPile = document.querySelector("#deckPile");
+let colorGrid = document.querySelector("#colorGrid");
 let discardPileCard;
 
 let allCards = Object.keys(deck);
@@ -81,23 +82,26 @@ function displayCard() {
 
 function addToDiscardPile(e) {
     let cardName = e.target.id;
+    let cardNumber = cardName[cardName.length - 1];
+    let cardPlus = cardName[cardName.length - 5];
     let discardCard = discardPileCard.firstChild.id;
     let discardCardColor = discardCard[0];
     let discardCardNumber = discardCard[discardCard.length - 1];
     let discardCardPlus = discardCard[discardCard.length - 5];
-    if (cardName[0] == discardCardColor) {
+    if (cardName[0] === "w" && (cardNumber == "d" || cardNumber == 4)) {
+        colorGrid.style.width = "300px";
     }
-    else if (cardName[cardName.length - 1] == discardCardNumber) {
-        if (cardName[cardName.length - 1] == 2 && discardCardPlus == "P" && cardName[cardName.length - 5] != "P") {
+    else if (cardName[0] == discardCardColor) {
+    }
+    else if (cardNumber == discardCardNumber) {
+        if (cardNumber == 2 && discardCardPlus == "P" && cardPlus != "P") {
             return
         }
-        else if (cardName[cardName.length - 1] == 2 && discardCardPlus != "P" && cardName[cardName.length - 5] == "P") {
+        else if (cardNumber == 2 && discardCardPlus != "P" && cardPlus == "P") {
             return
         };
     }
-    else if (cardName[cardName.length - 5] == "P" && discardCardPlus == "P") {
-    }
-    else if (cardName[0] == "w" || discardCardColor == "w") {
+    else if (cardPlus == "P" && discardCardPlus == "P") {
     }
     else {
         return
@@ -175,4 +179,69 @@ function discardPileToDeckPile() {
             discardPile[key] -= value;
         };
     });
+};
+
+colorGrid.addEventListener("click", chooseColor);
+function chooseColor(e) {
+    let color = e.target.id;
+    let newWildCard;
+    let discardCard = discardPileCard.firstChild.id;
+    switch (color) {
+        case "cellRed":
+            if (discardCard == "wild") {
+                discardPileCard.style.background = "url('otherCards.png') -258.5px 0";
+            }
+            else if (discardCard == "wildPlus4") {
+                discardPileCard.style.background = "url('otherCards.png') -691px 0px";
+            };
+            removeColorGrid();
+            newWildCard = document.createElement("div");
+            newWildCard.id = "redWild";
+            discardPileCard.appendChild(newWildCard);
+            break;
+
+        case "cellYellow":
+            if (discardCard == "wild") {
+                discardPileCard.style.background = "url('otherCards.png') -172px 0";
+            }
+            else if (discardCard == "wildPlus4") {
+                discardPileCard.style.background = "url('otherCards.png') -605px 0";
+            };
+            removeColorGrid();
+            newWildCard = document.createElement("div");
+            newWildCard.id = "yellowWild";
+            discardPileCard.appendChild(newWildCard);
+            break;
+
+        case "cellGreen":
+            if (discardCard == "wild") {
+                discardPileCard.style.background = "url('otherCards.png') -431px 0";
+            }
+            else if (discardCard == "wildPlus4") {
+                discardPileCard.style.background = "url('otherCards.png') -863px 0px";
+            };
+            removeColorGrid();
+            newWildCard = document.createElement("div");
+            newWildCard.id = "greenWild";
+            discardPileCard.appendChild(newWildCard);
+            break;
+
+        case "cellBlue":
+            if (discardCard == "wild") {
+                discardPileCard.style.background = "url('otherCards.png') -344.5px 0";
+            }
+            else if (discardCard == "wildPlus4") {
+                discardPileCard.style.background = "url('otherCards.png') -777px 0px";
+            };
+            removeColorGrid();
+            newWildCard = document.createElement("div");
+            newWildCard.id = "blueWild";
+            discardPileCard.appendChild(newWildCard);
+            break;
+    };
+};
+
+function removeColorGrid() {
+    discardPileCard.removeChild(discardPileCard.firstChild);
+    colorGrid.style.width = "0px";
 };
