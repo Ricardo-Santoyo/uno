@@ -7,6 +7,7 @@ let deck = {
     redSkip: 2, yellowSkip: 2, greenSkip: 2, blueSkip: 2, wild: 4, wildPlus4: 4
 };
 let playerDeck = {};
+let cpuDeck = {};
 let discardPile = {};
 
 let hiddenCards = document.querySelector("#hiddenCards");
@@ -14,6 +15,8 @@ let displayCards = document.querySelector("#displayCards");
 const playButton = document.querySelector("#play");
 let deckPile = document.querySelector("#deckPile");
 let colorGrid = document.querySelector("#colorGrid");
+let BackOfCard = document.querySelector("#backOfCard");
+let numberOfCpuCards = document.querySelector("#cpuCards");
 let discardPileCard;
 
 let allCards = Object.keys(deck);
@@ -30,6 +33,7 @@ function startGame() {
     playButton.remove();
     createDiscardPile();
     createDeckPile();
+    createComputerPile();
     clickablePlayerCards();
     initialCard();
 };
@@ -45,6 +49,16 @@ function passCards() {
         };
     };
     displayCard();
+    for (i = 0; i < 7; i++) {
+        let cpuCard = pickRandomCard(deck);
+        if (cpuDeck[cpuCard] == undefined) {
+            cpuDeck[cpuCard] = 1;
+        }
+        else {
+            cpuDeck[cpuCard] += 1;
+        };
+    };
+    displayCpuCards();
 };
 
 function pickRandomCard(obj) {
@@ -78,6 +92,12 @@ function displayCard() {
             numberOfCards -= 1;
         };
     }); 
+};
+
+function displayCpuCards() {
+    let valuesList = Object.values(cpuDeck);
+    let numberOfCards = valuesList.reduce((sum,value) => sum + value);
+    numberOfCpuCards.textContent = "×" + numberOfCards;
 };
 
 function addToDiscardPile(e) {
@@ -135,6 +155,10 @@ function createDiscardPile() {
 function createDeckPile() {
     deckPile.style.background = "url('otherCards.png') 0 0";
     deckPile.style.pointerEvents = "all";
+};
+
+function createComputerPile() {
+    BackOfCard.style.background = "url('otherCards.png') 0 0";
 };
 
 function initialCard() {
