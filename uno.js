@@ -9,6 +9,7 @@ let deck = {
 let playerDeck = {};
 let cpuDeck = {};
 let discardPile = {};
+let turnNumber = 1;
 
 let hiddenCards = document.querySelector("#hiddenCards");
 let displayCards = document.querySelector("#displayCards");
@@ -101,7 +102,13 @@ function displayCpuCards() {
 };
 
 function addToDiscardPile(e) {
-    let cardName = e.target.id;
+    let cardName;
+    if (typeof(e) == "string") {
+        cardName = e;
+    }
+    else {
+        cardName = e.target.id;
+    };
     let cardNumber = cardName[cardName.length - 1];
     let cardPlus = cardName[cardName.length - 5];
     let discardCard = discardPileCard.firstChild.id;
@@ -126,17 +133,25 @@ function addToDiscardPile(e) {
     else {
         return
     };
-    if (discardPileCard.firstChild) {
-        discardPileCard.removeChild(discardPileCard.firstChild);
+
+    if (typeof(e) == "string") {
+        discardPileCard.firstChild.id = cardName;
+    }
+    else {
+        if (discardPileCard.firstChild) {
+            discardPileCard.removeChild(discardPileCard.firstChild);
+        };
+        discardPileCard.appendChild(e.target);
+        playerDeck[cardName] -= 1;
     };
-    discardPileCard.appendChild(e.target);
-    playerDeck[cardName] -= 1;
+
     if (discardPile[cardName] == undefined) {
         discardPile[cardName] = 1;
     }
     else {
         discardPile[cardName] += 1;
     };
+    turn();
 };
 
 function clickablePlayerCards() {
@@ -170,20 +185,32 @@ function initialCard() {
 };
 
 deckPile.addEventListener("click", drawAcard);
-function drawAcard() {
+function drawAcard(e) {
     numberOfCardsInDeck = Object.values(deck).reduce((sum, value) => sum + value);
     if (numberOfCardsInDeck == 0) {
         discardPileToDeckPile();
     };
     let card = pickRandomCard(deck);
-    if (playerDeck[card] == undefined) {
-        playerDeck[card] = 1;
+    if (e == undefined) {
+        if (cpuDeck[card] == undefined) {
+            cpuDeck[card] = 1;
+        }
+        else {
+            cpuDeck[card] += 1;
+        };
+        displayCpuCards();
     }
     else {
-        playerDeck[card] += 1;
+        if (playerDeck[card] == undefined) {
+            playerDeck[card] = 1;
+        }
+        else {
+            playerDeck[card] += 1;
+        };
+        displayCard();
+        clickablePlayerCards();
     };
-    displayCard();
-    clickablePlayerCards();
+    turn();
 };
 
 function discardPileToDeckPile() {
@@ -268,4 +295,46 @@ function chooseColor(e) {
 function removeColorGrid() {
     discardPileCard.removeChild(discardPileCard.firstChild);
     colorGrid.style.width = "0px";
+};
+
+function cpuTurn() {
+    let keys = Object.keys(cpuDeck);
+    let cards = [];
+    keys.forEach((key) => {
+        if (cpuDeck[key] == 0) {
+        }
+        else {
+            cards.push(key);
+        };
+    });
+    let discardCard = discardPileCard.firstChild.id;
+    let discardCardColor = discardCard[0];
+    let discardCardNumber = discardCard[discardCard.length - 1];
+    let card = cards.find((card) => {
+        return (card[0] == discardCardColor || card[card.length - 1] == discardCardNumber);
+    });
+    if (card == undefined) {
+        drawAcard();
+    }
+    else {
+        cpuDeck[card] -= 1;
+        displayCpuCards();
+        addToDiscardPile(card);
+    };
+};
+
+function turn() {
+    if (turnNumber % 2 == 1) {
+        turnNumber += 1;
+        displayCards.style.pointerEvents = "none";
+        displayCards.style.opacity = "40%";
+        deckPile.style.pointerEvents = "none";
+        setTimeout(cpuTurn, 500);
+    }
+    else {
+        turnNumber += 1
+        displayCards.style.pointerEvents = "";
+        displayCards.style.opacity = "";
+        deckPile.style.pointerEvents = "all";
+    };
 };
