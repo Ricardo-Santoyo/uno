@@ -119,6 +119,9 @@ function addToDiscardPile(e) {
         colorGrid.style.width = "300px";
     }
     else if (cardName[0] == discardCardColor) {
+        if (cardPlus == "P" && typeof(e) != "string") {
+            plus2();
+        };
     }
     else if (cardNumber == discardCardNumber) {
         if (cardNumber == 2 && discardCardPlus == "P" && cardPlus != "P") {
@@ -129,6 +132,9 @@ function addToDiscardPile(e) {
         };
     }
     else if (cardPlus == "P" && discardCardPlus == "P") {
+        if (typeof(e) == "string") {
+            plus2();
+        };
     }
     else {
         return
@@ -210,7 +216,9 @@ function drawAcard(e) {
         displayCard();
         clickablePlayerCards();
     };
-    turn();
+    if (e != undefined) {
+        turn();
+    }
 };
 
 function discardPileToDeckPile() {
@@ -307,14 +315,12 @@ function cpuTurn() {
             cards.push(key);
         };
     });
-    let discardCard = discardPileCard.firstChild.id;
-    let discardCardColor = discardCard[0];
-    let discardCardNumber = discardCard[discardCard.length - 1];
     let card = cards.find((card) => {
-        return (card[0] == discardCardColor || card[card.length - 1] == discardCardNumber);
+        return (checkCard(card));
     });
     if (card == undefined) {
         drawAcard();
+        turn();
     }
     else {
         cpuDeck[card] -= 1;
@@ -336,5 +342,40 @@ function turn() {
         displayCards.style.pointerEvents = "";
         displayCards.style.opacity = "";
         deckPile.style.pointerEvents = "all";
+    };
+};
+
+function plus2() {
+    drawAcard();
+    drawAcard();
+};
+
+function checkCard(card) {
+    let cardNumber = card[card.length - 1];
+    let cardPlus = card[card.length - 5];
+    let discardCard = discardPileCard.firstChild.id;
+    let discardCardColor = discardCard[0];
+    let discardCardNumber = discardCard[discardCard.length - 1];
+    let discardCardPlus = discardCard[discardCard.length - 5];
+    if (card[0] === "w" && (cardNumber == "d" || cardNumber == 4)) {
+        return card;
+    }
+    else if (card[0] == discardCardColor) {
+        return card;
+    }
+    else if (cardNumber == discardCardNumber) {
+        if (cardNumber == 2 && discardCardPlus == "P" && cardPlus != "P") {
+            return;
+        }
+        else if (cardNumber == 2 && discardCardPlus != "P" && cardPlus == "P") {
+            return;
+        };
+        return card;
+    }
+    else if (cardPlus == "P" && discardCardPlus == "P") {
+        return card;
+    }
+    else {
+        return;
     };
 };
