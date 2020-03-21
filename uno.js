@@ -18,6 +18,8 @@ let deckPile = document.querySelector("#deckPile");
 let colorGrid = document.querySelector("#colorGrid");
 let BackOfCard = document.querySelector("#backOfCard");
 let numberOfCpuCards = document.querySelector("#cpuCards");
+let computerPile = document.querySelector("#computerPile");
+let add2 = document.querySelector("#add2");
 let discardPileCard;
 
 let allCards = Object.keys(deck);
@@ -111,6 +113,7 @@ function addToDiscardPile(e) {
     };
     let cardNumber = cardName[cardName.length - 1];
     let cardPlus = cardName[cardName.length - 5];
+    let cardSkip = cardName[cardName.length - 4];
     let discardCard = discardPileCard.firstChild.id;
     let discardCardColor = discardCard[0];
     let discardCardNumber = discardCard[discardCard.length - 1];
@@ -120,7 +123,21 @@ function addToDiscardPile(e) {
     }
     else if (cardName[0] == discardCardColor) {
         if (cardPlus == "P" && typeof(e) != "string") {
-            plus2();
+            computerPile.style.opacity = "40%";
+            add2.textContent = "+2";
+            turnNumber += 1;
+            setTimeout(plus2, 600);
+        }
+        else if (cardSkip == "S") {
+            turnNumber += 1;
+        };
+    }
+    else if (cardPlus === "P" && discardCardPlus === "P") {
+        if (typeof(e) != "string") {
+            computerPile.style.opacity = "40%";
+            add2.textContent = "+2";
+            turnNumber += 1;
+            setTimeout(plus2, 600);
         };
     }
     else if (cardNumber == discardCardNumber) {
@@ -129,11 +146,9 @@ function addToDiscardPile(e) {
         }
         else if (cardNumber == 2 && discardCardPlus != "P" && cardPlus == "P") {
             return
-        };
-    }
-    else if (cardPlus == "P" && discardCardPlus == "P") {
-        if (typeof(e) == "string") {
-            plus2();
+        }
+        else if (cardSkip == "S") {
+            turnNumber += 1;
         };
     }
     else {
@@ -335,7 +350,7 @@ function turn() {
         displayCards.style.pointerEvents = "none";
         displayCards.style.opacity = "40%";
         deckPile.style.pointerEvents = "none";
-        setTimeout(cpuTurn, 500);
+        interval = setTimeout(cpuTurn, 500);
     }
     else {
         turnNumber += 1
@@ -348,6 +363,8 @@ function turn() {
 function plus2() {
     drawAcard();
     drawAcard();
+    computerPile.style.opacity = "";
+    add2.textContent = "";
 };
 
 function checkCard(card) {
