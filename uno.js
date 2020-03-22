@@ -114,21 +114,23 @@ function addToDiscardPile(e) {
     let cardNumber = cardName[cardName.length - 1];
     let cardPlus = cardName[cardName.length - 5];
     let cardSkip = cardName[cardName.length - 4];
+    let cardReverse = cardName[cardName.length - 7];
     let discardCard = discardPileCard.firstChild.id;
     let discardCardColor = discardCard[0];
     let discardCardNumber = discardCard[discardCard.length - 1];
     let discardCardPlus = discardCard[discardCard.length - 5];
     if (cardName[0] === "w" && (cardNumber == "d" || cardNumber == 4)) {
         colorGrid.style.width = "300px";
+        displayCards.style.opacity = "40%";
     }
     else if (cardName[0] == discardCardColor) {
         if (cardPlus == "P" && typeof(e) != "string") {
             computerPile.style.opacity = "40%";
             add2.textContent = "+2";
             turnNumber += 1;
-            setTimeout(plus2, 600);
+            setTimeout(plus2, 1000);
         }
-        else if (cardSkip == "S") {
+        else if (cardSkip == "S" || cardReverse == "R") {
             turnNumber += 1;
         };
     }
@@ -137,7 +139,7 @@ function addToDiscardPile(e) {
             computerPile.style.opacity = "40%";
             add2.textContent = "+2";
             turnNumber += 1;
-            setTimeout(plus2, 600);
+            setTimeout(plus2, 1000);
         };
     }
     else if (cardNumber == discardCardNumber) {
@@ -147,7 +149,7 @@ function addToDiscardPile(e) {
         else if (cardNumber == 2 && discardCardPlus != "P" && cardPlus == "P") {
             return
         }
-        else if (cardSkip == "S") {
+        else if (cardSkip == "S" || cardReverse == "R") {
             turnNumber += 1;
         };
     }
@@ -172,7 +174,12 @@ function addToDiscardPile(e) {
     else {
         discardPile[cardName] += 1;
     };
-    turn();
+
+    if (cardName[0] === "w" && (cardNumber == "d" || cardNumber == 4)) {
+    }
+    else {
+        turn();
+    };
 };
 
 function clickablePlayerCards() {
@@ -267,11 +274,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -691px 0px";
+                computerPile.style.opacity = "40%";
+                add2.textContent = "+4";
+                turnNumber += 1;
+                setTimeout(plus4, 900);
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
             newWildCard.id = "redWild";
             discardPileCard.appendChild(newWildCard);
+            turn();
             break;
 
         case "cellYellow":
@@ -280,11 +292,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -605px 0";
+                computerPile.style.opacity = "40%";
+                add2.textContent = "+4";
+                turnNumber += 1;
+                setTimeout(plus4, 900);
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
             newWildCard.id = "yellowWild";
             discardPileCard.appendChild(newWildCard);
+            turn();
             break;
 
         case "cellGreen":
@@ -293,11 +310,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -863px 0px";
+                computerPile.style.opacity = "40%";
+                add2.textContent = "+4";
+                turnNumber += 1;
+                setTimeout(plus4, 900);
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
             newWildCard.id = "greenWild";
             discardPileCard.appendChild(newWildCard);
+            turn();
             break;
 
         case "cellBlue":
@@ -306,11 +328,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -777px 0px";
+                computerPile.style.opacity = "40%";
+                add2.textContent = "+4";
+                turnNumber += 1;
+                setTimeout(plus4, 900);
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
             newWildCard.id = "blueWild";
             discardPileCard.appendChild(newWildCard);
+            turn();
             break;
     };
 };
@@ -318,6 +345,7 @@ function chooseColor(e) {
 function removeColorGrid() {
     discardPileCard.removeChild(discardPileCard.firstChild);
     colorGrid.style.width = "0px";
+    displayCards.style.opacity = "";
 };
 
 function cpuTurn() {
@@ -395,4 +423,13 @@ function checkCard(card) {
     else {
         return;
     };
+};
+
+function plus4() {
+    drawAcard();
+    drawAcard();
+    drawAcard();
+    drawAcard();
+    computerPile.style.opacity = "";
+    add2.textContent = "";
 };
