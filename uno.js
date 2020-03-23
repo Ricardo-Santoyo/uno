@@ -192,6 +192,10 @@ function addToDiscardPile(e) {
     };
 
     if (cardName[0] === "w" && (cardNumber == "d" || cardNumber == 4)) {
+        if (typeof(e) == "string") {
+            let highestValue = pickColor();
+            chooseColor(highestValue); 
+        };
     }
     else {
         turn();
@@ -280,7 +284,13 @@ function discardPileToDeckPile() {
 
 colorGrid.addEventListener("click", chooseColor);
 function chooseColor(e) {
-    let color = e.target.id;
+    let color;
+    if (typeof(e) == "string") {
+        color = e;
+    }
+    else {
+        color = e.target.id;
+    };
     let newWildCard;
     let discardCard = discardPileCard.firstChild.id;
     switch (color) {
@@ -290,10 +300,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -691px 0px";
-                computerPile.style.opacity = "40%";
-                add2.textContent = "+4";
-                turnNumber += 1;
-                setTimeout(plus4, 900);
+                if (turnNumber % 2 == 0) {
+                    displayPlus4onPlayer();
+                    setTimeout(cpuPlus4, 920);
+                }
+                else {
+                    computerPile.style.opacity = "40%";
+                    add2.textContent = "+4";
+                    turnNumber += 1;
+                    setTimeout(plus4, 900);
+                };
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
@@ -308,10 +324,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -605px 0";
-                computerPile.style.opacity = "40%";
-                add2.textContent = "+4";
-                turnNumber += 1;
-                setTimeout(plus4, 900);
+                if (turnNumber % 2 == 0) {
+                    displayPlus4onPlayer();
+                    setTimeout(cpuPlus4, 920);
+                }
+                else {
+                    computerPile.style.opacity = "40%";
+                    add2.textContent = "+4";
+                    turnNumber += 1;
+                    setTimeout(plus4, 900);
+                };
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
@@ -326,10 +348,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -863px 0px";
-                computerPile.style.opacity = "40%";
-                add2.textContent = "+4";
-                turnNumber += 1;
-                setTimeout(plus4, 900);
+                if (turnNumber % 2 == 0) {
+                    displayPlus4onPlayer();
+                    setTimeout(cpuPlus4, 920);
+                }
+                else {
+                    computerPile.style.opacity = "40%";
+                    add2.textContent = "+4";
+                    turnNumber += 1;
+                    setTimeout(plus4, 900);
+                };
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
@@ -344,10 +372,16 @@ function chooseColor(e) {
             }
             else if (discardCard == "wildPlus4") {
                 discardPileCard.style.background = "url('otherCards.png') -777px 0px";
-                computerPile.style.opacity = "40%";
-                add2.textContent = "+4";
-                turnNumber += 1;
-                setTimeout(plus4, 900);
+                if (turnNumber % 2 == 0) {
+                    displayPlus4onPlayer();
+                    setTimeout(cpuPlus4, 920);
+                }
+                else {
+                    computerPile.style.opacity = "40%";
+                    add2.textContent = "+4";
+                    turnNumber += 1;
+                    setTimeout(plus4, 900);
+                };
             };
             removeColorGrid();
             newWildCard = document.createElement("div");
@@ -462,4 +496,60 @@ function cpuPlus2() {
     deckPile.style.pointerEvents = "all";
     add2.textContent = "";
     add2.style.top = "";
+};
+
+function cpuPlus4() {
+    drawAcard("player");
+    drawAcard("player");
+    drawAcard("player");
+    drawAcard("player");
+    displayCards.style.pointerEvents = "";
+    displayCards.style.opacity = "";
+    deckPile.style.pointerEvents = "all";
+    add2.textContent = "";
+    add2.style.top = "";
+};
+
+function displayPlus4onPlayer() {
+    displayCards.style.pointerEvents = "none";
+    displayCards.style.opacity = "40%";
+    deckPile.style.pointerEvents = "none";
+    add2.textContent = "+4";
+    add2.style.top = "70%";
+    turnNumber += 1;
+};
+
+//When cpu plays a wild or wildPlus4 card it picks
+function pickColor() {
+    let red = 0;
+    let yellow = 0;
+    let green = 0;
+    let blue = 0;
+    let array = []
+    let keys = Object.keys(cpuDeck);
+    keys.forEach((key) => {
+        let cardColor = key[0];
+        let value = cpuDeck[key];
+
+        if (cardColor == "r") {
+            red += value;
+        }
+        else if (cardColor == "y") {
+            yellow += value;
+        }
+        else if (cardColor == "g") {
+            green += value;
+        }
+        else if (cardColor == "b") {
+            blue += value;
+        };
+    });
+
+    array.push(red, yellow, green, blue);
+    array.sort((a, b) => b - a);
+
+    if (array[0] == red) {return "cellRed"}
+    else if (array[0] == yellow) {return "cellYellow"}
+    else if (array[0] == green) {return "cellGreen"}
+    else if (array[0] == blue) {return "cellBlue"};
 };
