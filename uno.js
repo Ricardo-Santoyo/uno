@@ -130,6 +130,14 @@ function addToDiscardPile(e) {
             turnNumber += 1;
             setTimeout(plus2, 1000);
         }
+        else if (cardPlus == "P" && typeof(e) == "string") {
+            displayCards.style.pointerEvents = "none";
+            displayCards.style.opacity = "40%";
+            deckPile.style.pointerEvents = "none";
+            add2.textContent = "+2";
+            add2.style.top = "70%";
+            setTimeout(cpuPlus2, 960);
+        }
         else if (cardSkip == "S" || cardReverse == "R") {
             turnNumber += 1;
         };
@@ -140,6 +148,14 @@ function addToDiscardPile(e) {
             add2.textContent = "+2";
             turnNumber += 1;
             setTimeout(plus2, 1000);
+        }
+        else {
+            displayCards.style.pointerEvents = "none";
+            displayCards.style.opacity = "40%";
+            deckPile.style.pointerEvents = "none";
+            add2.textContent = "+2";
+            add2.style.top = "70%";
+            setTimeout(cpuPlus2, 960);
         };
     }
     else if (cardNumber == discardCardNumber) {
@@ -238,7 +254,7 @@ function drawAcard(e) {
         displayCard();
         clickablePlayerCards();
     };
-    if (e != undefined) {
+    if (e != undefined && e != "player") {
         turn();
     }
 };
@@ -378,13 +394,16 @@ function turn() {
         displayCards.style.pointerEvents = "none";
         displayCards.style.opacity = "40%";
         deckPile.style.pointerEvents = "none";
-        interval = setTimeout(cpuTurn, 500);
+        setTimeout(cpuTurn, 500);
     }
-    else {
+    else if (add2.style.top != "70%") {
         turnNumber += 1
         displayCards.style.pointerEvents = "";
         displayCards.style.opacity = "";
         deckPile.style.pointerEvents = "all";
+    }
+    else if (add2.style.top == "70%") {
+        turnNumber += 1
     };
 };
 
@@ -432,4 +451,15 @@ function plus4() {
     drawAcard();
     computerPile.style.opacity = "";
     add2.textContent = "";
+};
+
+function cpuPlus2() {
+    drawAcard("player");
+    drawAcard("player");
+    turn();
+    displayCards.style.pointerEvents = "";
+    displayCards.style.opacity = "";
+    deckPile.style.pointerEvents = "all";
+    add2.textContent = "";
+    add2.style.top = "";
 };
