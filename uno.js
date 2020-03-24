@@ -226,6 +226,9 @@ function createComputerPile() {
 
 function initialCard() {
     let card = pickRandomCard(deck);
+    while (card == "wild" || card == "wildPlus4") {
+        card = pickRandomCard(deck);
+    };
     let displayCard = document.getElementById(card);
     let cloneCard = displayCard.cloneNode(true);
     discardPileCard.appendChild(cloneCard);
